@@ -25,3 +25,13 @@ ON o.employee_id = e.employee_id
 WHERE shipped_date IS NOT NULL
 GROUP BY o.employee_id, e.first_name, e.last_name
 ORDER BY orders_processed DESC
+
+SELECT
+    od.discount,
+    ROUND(AVG(od.quantity)::numeric, 2) AS avg_quantity_ordered,
+    COUNT(*) AS total_line_items
+FROM order_details AS od
+JOIN orders AS o ON od.order_id = o.order_id
+WHERE o.shipped_date IS NOT NULL
+GROUP BY od.discount
+ORDER BY od.discount;
